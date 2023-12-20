@@ -1,0 +1,31 @@
+# Directories to ignore
+**/bin/
+**/obj/
+**/Properties/PublishProfiles/
+
+# Files to ignore
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio Code directories
+.vscode/
+
+# Rider IDE directories
+.idea/
+
+# Optional: Exclude the development settings if they contain sensitive information
+# appsettings.Development.json
+
+# Exclude the NUGET packages
+packages/
+
+# OS generated files #
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
