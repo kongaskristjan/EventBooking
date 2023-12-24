@@ -1,7 +1,16 @@
+using Microsoft.EntityFrameworkCore;
+using EventBooking.Data.Adapters;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddScoped<DbAdapter>();
+
+// Configure database
+var connectionString = builder.Configuration.GetConnectionString("PostgresDbContext");
+builder.Services.AddDbContext<PostgresDbContext>(options =>
+    options.UseNpgsql(connectionString));
 
 var app = builder.Build();
 

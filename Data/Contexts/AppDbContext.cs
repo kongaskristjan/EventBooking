@@ -5,8 +5,7 @@ public class PostgresDbContext : DbContext
 {
     public DbSet<Event> Events { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    public PostgresDbContext(DbContextOptions<PostgresDbContext> options) : base(options)
     {
-        optionsBuilder.UseNpgsql("name=ConnectionStrings:PostgresDbContext");
     }
 }
