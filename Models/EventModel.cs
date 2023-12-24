@@ -21,10 +21,19 @@ namespace EventBooking.Models
         public DateTime Timestamp { get; set; } // "Event timestamp"
 
         [Column("location", TypeName = "text")]
+        [Required]
         public string Location { get; set; } // "Event location string"
 
         [Column("info", TypeName = "varchar(1000)")]
+        [Required]
         [MaxLength(1000)]
         public string Info { get; set; } // "Additional information"
+    }
+
+    // Another model to show number of participants for an event
+    public class EventWithParticipants : Event
+    {
+        [Column("participants")]
+        public int Participants { get; set; }
     }
 }
