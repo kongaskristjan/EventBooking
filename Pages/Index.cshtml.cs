@@ -24,7 +24,7 @@ public class IndexModel : PageModel
     {
         // Populate PastEvents and FutureEvents
         var events = _DbAdapter.ListEvents();
-        var now = DateTime.Now;
+        var now = DateTime.UtcNow;
         PastEvents = events.Where(e => e.Timestamp < now);
         FutureEvents = events.Where(e => e.Timestamp >= now);
     }
