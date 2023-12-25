@@ -28,4 +28,10 @@ public class IndexModel : PageModel
         PastEvents = events.Where(e => e.Timestamp < now);
         FutureEvents = events.Where(e => e.Timestamp >= now);
     }
+
+    public async Task<IActionResult> OnPostDeleteEventAsync(int id)
+    {
+        _DbAdapter.RemoveEvent(id);
+        return RedirectToPage("/Index");
+    }
 }

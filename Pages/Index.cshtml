@@ -13,6 +13,7 @@
                 <th>Kuupäev</th>
                 <th>Asukoht</th>
                 <th>Osavõtjate arv</th>
+                <th />
             </tr>
         </thead>
         <tbody>
@@ -20,11 +21,19 @@
             {
                 <tr>
                     <td>@item.Name</td>
-                    <td>@item.Timestamp</td>
+                    <td>@item.Timestamp.ToString("yyyy-MM-dd")</td>
                     <td>@item.Location</td>
                     <td>@item.Participants</td>
+                    <td>
+                        <form method="post" asp-page-handler="DeleteEvent" onsubmit="return confirm('Oled kindel et soovid ürituse kustutada?');">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <input type="submit" value="Kustuta" class="btn btn-danger" />
+                        </form>
+                    </td>
                 </tr>
             }
+        </tbody>
     </table>
 
     <h2 class="display-4">Tulevased üritused</h2>
@@ -35,6 +44,7 @@
                 <th>Kuupäev</th>
                 <th>Asukoht</th>
                 <th>Osavõtjate arv</th>
+                <th />
             </tr>
         </thead>
         <tbody>
@@ -42,10 +52,18 @@
             {
                 <tr>
                     <td>@item.Name</td>
-                    <td>@item.Timestamp</td>
+                    <td>@item.Timestamp.ToString("yyyy-MM-dd")</td>
                     <td>@item.Location</td>
                     <td>@item.Participants</td>
+                    <td>
+                        <form method="post" asp-page-handler="DeleteEvent" onsubmit="return confirm('Oled kindel et soovid ürituse kustutada?');">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <input type="submit" value="Kustuta" class="btn btn-danger" />
+                        </form>
+                    </td>
                 </tr>
             }
+        </tbody>
     </table>
 </div>
