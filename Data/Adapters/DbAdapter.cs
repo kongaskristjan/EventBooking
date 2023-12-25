@@ -12,7 +12,7 @@ namespace EventBooking.Data.Adapters
             _context = context;
         }
 
-        public void AddEvent(Event e)
+        public void CreateEvent(Event e)
         {
             _context.Events.Add(e);
             _context.SaveChanges();

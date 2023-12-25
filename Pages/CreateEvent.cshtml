@@ -1,0 +1,29 @@
+@page
+@model CreateEventModel
+@{
+    ViewData["Title"] = "Lisa üritus";
+}
+
+<h2 class="display-4">Lisa üritus</h2>
+<form method="post" asp-page-handler="CreateEvent">
+    <div>
+        <label asp-for="formEvent.Name">Ürituse nimi:</label>
+        <input asp-for="formEvent.Name" class="form-control" required />
+    </div>
+    <div>
+        <label asp-for="formEvent.Date">Kuupäev:</label>
+        <input asp-for="formEvent.Date" class="form-control" placeholder="pp.kk.aaaa HH:MM" required pattern="\d{2}\.\d{2}\.\d{4} \d{2}:\d{2}" />
+    </div>
+    <div>
+        <label asp-for="formEvent.Location">Asukoht:</label>
+        <input asp-for="formEvent.Location" class="form-control" required />
+    </div>
+    <div>
+        <label asp-for="formEvent.AdditionalInformation">Lisainfo:</label>
+        <input asp-for="formEvent.AdditionalInformation" class="form-control" />
+    </div>
+    <div>
+        <button asp-page="Index">Tagasi</button>
+        <input type="submit" value="Lisa" />
+    </div>
+</form>
