@@ -31,7 +31,7 @@ namespace EventBooking.Data.Adapters
         public EventWithParticipants[] ListEvents()
         {
             Event [] events;
-            events = _context.Events.ToArray();
+            events = _context.Events.OrderBy(entity => entity.Timestamp).ToArray();
 
             // Convert to EventWithParticipants using a loop
             var eventsWithParticipants = new EventWithParticipants[events.Length];
