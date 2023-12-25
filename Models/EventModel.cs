@@ -14,20 +14,20 @@ namespace EventBooking.Models
 
         [Column("name", TypeName = "text")]
         [Required]
-        public string Name { get; set; } // "Event name"
+        public string Name { get; set; } = ""; // "Event name"
 
         [Column("timestamp", TypeName = "timestamp with time zone")]
         [Required]
-        public DateTime Timestamp { get; set; } // "Event timestamp"
+        public DateTime Timestamp { get; set; } = DateTime.Now; // "Event timestamp"
 
         [Column("location", TypeName = "text")]
         [Required]
-        public string Location { get; set; } // "Event location string"
+        public string Location { get; set; } = ""; // "Event location string"
 
         [Column("info", TypeName = "varchar(1000)")]
         [Required]
         [MaxLength(1000)]
-        public string Info { get; set; } // "Additional information"
+        public string Info { get; set; } = ""; // "Additional information"
     }
 
     // Another model to show number of participants for an event
