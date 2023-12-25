@@ -22,9 +22,10 @@ public class IndexModel : PageModel
 
     public void OnGet()
     {
-        // Get all events from the database
+        // Populate PastEvents and FutureEvents
         var events = _DbAdapter.ListEvents();
-        PastEvents = events.Where(e => e.Timestamp < DateTime.Now);
-        FutureEvents = new List<EventWithParticipants>{};
+        var now = DateTime.Now;
+        PastEvents = events.Where(e => e.Timestamp < now);
+        FutureEvents = events.Where(e => e.Timestamp >= now);
     }
 }
