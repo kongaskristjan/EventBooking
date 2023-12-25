@@ -18,5 +18,64 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+  margin-top: 20px;
+  background-color: #eef2f5;
+}
+
+/* Block styles */
+
+header {
+  background-color: white;
+  display: flex;
+  text-transform: uppercase;
+}
+
+.header-section {
+  display: flex;
+  padding: 20px;
+  align-items: center;
+  font-weight: 600;
+}
+
+.header-section-logo {
+  margin-left: auto;
+}
+
+.content-block {
+  background-color: white;
+}
+
+footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.footer-section {
+  padding: 30px;
+}
+
+header, .content-block, footer {
+  margin-bottom: 20px;
+}
+
+/* Miscellaneous */
+
+.blue-style {
+  background-color: #005aa1;
+  color: white;
+}
+
+.gray-style {
+  background-color: #373737;
+  color: white;
+}
+
+.unlink {
+  color: inherit;
+  text-decoration: none;
+}
+
+.unlink:hover {
+  color: inherit;
+  text-decoration: none;
 }
