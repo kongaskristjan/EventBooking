@@ -22,7 +22,7 @@ body {
   background-color: #eef2f5;
 }
 
-/* Block styles */
+/* Block content */
 
 header {
   background-color: white;
@@ -34,6 +34,9 @@ header {
   display: flex;
   padding: 20px;
   align-items: center;
+}
+
+.link {
   font-weight: 600;
 }
 
@@ -43,6 +46,20 @@ header {
 
 .content-block {
   background-color: white;
+}
+
+.content-horizontal {
+  display: flex;
+  /* fill available width */
+  justify-content: space-between;
+}
+
+.content-horizontal-non-last {
+  margin-right: 20px;
+}
+
+.content-horizontal-section {
+  flex-grow: 1;
 }
 
 footer {
@@ -78,4 +95,9 @@ header, .content-block, footer {
 .unlink:hover {
   color: inherit;
   text-decoration: none;
+}
+
+.downsized-remove {
+  width: 40%;
+  height: 40%;
 }

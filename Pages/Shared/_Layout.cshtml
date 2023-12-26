@@ -1,4 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@functions {
+    private string IsActive(string pageName)
+    {
+        var currentPage = (string) ViewContext.RouteData.Values["Page"];
+        return currentPage?.EndsWith(pageName) == true ? "blue-style" : "";
+    }
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -14,10 +22,10 @@
                 <img src="~/images/logo.svg">
             </a>
         </div>
-        <div class="header-section blue-style">
+        <div class="header-section link @IsActive("/Index")">
             <a asp-page="/Index" class="unlink">Avaleht</a>
         </div>
-        <div class="header-section">
+        <div class="header-section link @IsActive("/CreateEvent")">
             <a asp-page="/CreateEvent" class="unlink">Ürituse lisamine</a>
         </div>
         <div class="header-section header-section-logo">

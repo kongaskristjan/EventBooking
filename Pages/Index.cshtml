@@ -4,66 +4,63 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h2 class="display-4">Toimunud üritused</h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Nimi</th>
-                <th>Kuupäev</th>
-                <th>Asukoht</th>
-                <th>Osavõtjate arv</th>
-                <th />
-            </tr>
-        </thead>
+<div class="content-horizontal">
+    <div class="content-block content-horizontal-section content-horizontal-non-last">
+    <h2 class="text-center blue-style p-3">Tulevased üritused</h2>
+    <div class="p-3">
+    <table class="table table-borderless">
         <tbody>
-            @foreach (var item in Model.PastEvents)
-            {
-                <tr>
-                    <td>@item.Name</td>
-                    <td>@item.Timestamp.ToString("yyyy-MM-dd")</td>
-                    <td>@item.Location</td>
-                    <td>@item.Participants</td>
-                    <td>
-                        <form method="post" asp-page-handler="DeleteEvent" onsubmit="return confirm('Oled kindel et soovid ürituse kustutada?');">
-                            @Html.AntiForgeryToken()
-                            <input type="hidden" name="id" value="@item.Id" />
-                            <input type="submit" value="Kustuta" class="btn btn-danger" />
-                        </form>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-
-    <h2 class="display-4">Tulevased üritused</h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Nimi</th>
-                <th>Kuupäev</th>
-                <th>Asukoht</th>
-                <th>Osavõtjate arv</th>
-                <th />
-            </tr>
-        </thead>
-        <tbody>
+            @{
+            int i = 1;
             @foreach (var item in Model.FutureEvents)
             {
                 <tr>
-                    <td>@item.Name</td>
-                    <td>@item.Timestamp.ToString("yyyy-MM-dd")</td>
-                    <td>@item.Location</td>
-                    <td>@item.Participants</td>
-                    <td>
+                    <td class="align-middle">@i. @item.Name</td>
+                    <td class="align-middle">@item.Timestamp.ToString("yyyy-MM-dd")</td>
+                    <td class="align-middle link unlink"><a>Osavõtjad</a></td>
+                    <td class="align-middle">
                         <form method="post" asp-page-handler="DeleteEvent" onsubmit="return confirm('Oled kindel et soovid ürituse kustutada?');">
                             @Html.AntiForgeryToken()
                             <input type="hidden" name="id" value="@item.Id" />
-                            <input type="submit" value="Kustuta" class="btn btn-danger" />
+                            <input type="image" src="~/images/remove.svg" class="downsized-remove" value="Kustuta" />
                         </form>
                     </td>
                 </tr>
+                i++;
+            }
             }
         </tbody>
     </table>
+    </div>
+    </div>
+
+    <div class="content-block content-horizontal-section">
+    <h2 class="text-center blue-style p-3">Tulevased üritused</h2>
+    <div class="p-3">
+    <table class="table table-borderless">
+        <tbody>
+            @{
+            i = 1;
+            @foreach (var item in Model.PastEvents)
+            {
+                <tr>
+                    <td class="align-middle">@i. @item.Name</td>
+                    <td class="align-middle">@item.Timestamp.ToString("yyyy-MM-dd")</td>
+                    <td class="align-middle">Osavõtjad</td>
+                    <td class="align-middle">
+                        <form method="post" asp-page-handler="DeleteEvent" onsubmit="return confirm('Oled kindel et soovid ürituse kustutada?');">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@item.Id" />
+                            <input type="image" src="~/images/remove.svg" class="downsized-remove" value="Kustuta" />
+                        </form>
+                    </td>
+                </tr>
+                i++;
+            }
+            }
+        </tbody>
+    </table>
+    </div>
+    </div>
+
 </div>
