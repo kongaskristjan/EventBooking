@@ -71,8 +71,33 @@ footer {
   padding: 30px;
 }
 
-header, .content-block, footer {
+header, footer {
   margin-bottom: 20px;
+}
+
+/* Forms */
+
+.form-background {
+  background-color: white;
+  padding-top: 0.2em;
+  padding-bottom: 2em;
+}
+
+.form {
+  margin-left: 3em;
+}
+
+.form-block {
+  width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.form-heading {
+  color: #005aa1;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  font-size: 1.6em;
 }
 
 /* Miscellaneous */
@@ -80,6 +105,12 @@ header, .content-block, footer {
 .blue-style {
   background-color: #005aa1;
   color: white;
+}
+
+.light-gray-style {
+  background-color: #d0d0d0;
+  border: none;
+  color: black;
 }
 
 .gray-style {
@@ -100,4 +131,19 @@ header, .content-block, footer {
 .downsized-remove {
   width: 40%;
   height: 40%;
+}
+
+.sized-button {
+  display: inline-block;
+  text-align: center;
+  width: 70px;
+  height: 40px;
+  line-height: 40px;
+  align-items: center;
+}
+
+.move-text-down {
+  /* move text down to center it */
+  position: relative;
+  top: 1.5px;
 }
