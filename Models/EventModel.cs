@@ -29,11 +29,4 @@ namespace EventBooking.Models
         [MaxLength(1000)]
         public string Info { get; set; } = ""; // "Additional information"
     }
-
-    // Another model to show number of participants for an event
-    public class EventWithParticipants : Event
-    {
-        [Column("participants")]
-        public int Participants { get; set; }
-    }
 }

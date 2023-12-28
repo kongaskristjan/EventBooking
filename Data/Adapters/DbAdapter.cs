@@ -28,27 +28,11 @@ namespace EventBooking.Data.Adapters
             _context.SaveChanges();
         }
 
-        public EventWithParticipants[] ListEvents()
+        public Event[] ListEvents()
         {
             Event [] events;
             events = _context.Events.OrderBy(entity => entity.Timestamp).ToArray();
-
-            // Convert to EventWithParticipants using a loop
-            var eventsWithParticipants = new EventWithParticipants[events.Length];
-            for (int i = 0; i < events.Length; i++)
-            {
-                eventsWithParticipants[i] = new EventWithParticipants
-                {
-                    Id = events[i].Id,
-                    Name = events[i].Name,
-                    Timestamp = events[i].Timestamp,
-                    Location = events[i].Location,
-                    Info = events[i].Info,
-                    Participants = 0
-                };
-            }
-
-            return eventsWithParticipants;
+            return events;
         }
     }
 }

@@ -8,8 +8,8 @@ namespace EventBooking.Pages;
 
 public class IndexModel : PageModel
 {
-    public IEnumerable<EventWithParticipants> PastEvents { get; set; } = new List<EventWithParticipants>();
-    public IEnumerable<EventWithParticipants> FutureEvents { get; set; } = new List<EventWithParticipants>();
+    public IEnumerable<Event> PastEvents { get; set; } = new List<Event>();
+    public IEnumerable<Event> FutureEvents { get; set; } = new List<Event>();
 
     private readonly ILogger<IndexModel> _logger;
     private readonly DbAdapter _DbAdapter;
