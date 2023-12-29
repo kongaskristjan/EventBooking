@@ -6,6 +6,126 @@
 
 <div class="form-background">
 <div class="form-block">
-<h2 class="form-heading">Vaata osalejaid</h2>
+    <h2 class="form-heading">Osavõtjad</h2>
+    <table>
+    <tbody>
+        <tr>
+            <td>Ürituse nimi:</td>
+            <td><span class="form">nimi</span></td>
+        </tr>
+        <tr>
+            <td>Ürituse toimumisaeg:</td>
+            <td><span class="form">toimumisaeg</span></td>
+        </tr>
+        <tr>
+            <td>Koht:</td>
+            <td><span class="form">koht</span></td>
+        </tr>
+        <tr>
+            <td>Ettevõtted:</td>
+            <td><span class="form">
+                <!--<table>
+                    <tbody>
+                        foreach (var participant in Model.Participants)
+                        {
+                            <tr>
+                                <td>participant.Name</td>
+                                <td>participant.Email</td>
+                                <td>participant.Phone</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>-->
+            </span></td>
+        </tr>
+        <tr>
+            <td>Eraisikud:</td>
+            <td><span class="form">
+                <!--<table>
+                    <tbody>
+                        foreach (var participant in Model.Participants)
+                        {
+                            <tr>
+                                <td>participant.Name</td>
+                                <td>participant.Email</td>
+                                <td>participant.Phone</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>-->
+            </span></td>
+        </tr>
+
+    </tbody>
+    </table>
+
+    <h2 class="form-heading">Osavõtjate lisamine</h2>
+    <form method="post" asp-page-handler="CreateEvent">
+    <table>
+    <tbody>
+        <tr>
+            <td></td>
+            <td>
+                <label>
+                    <input type="radio" name="EntityType" value="company" checked />
+                    Ettevõte
+                </label>
+                <label class="ms-5">
+                    <input type="radio" name="EntityType" value="person" />
+                    Eraisik
+                </label>
+            </td>
+        </tr>
+        
+        <!-- Person specific fields -->
+        <tr class="person">
+            <td><label>Eesnimi:</label></td>
+            <td><input class="form form-control" required /></td>
+        </tr>
+        <tr class="person">
+            <td><label>Perenimi:</label></td>
+            <td><input class="form form-control" placeholder="pp.kk.aaaa hh:mm" required pattern="\d{2}\.\d{2}\.\d{4} \d{2}:\d{2}" /></td>
+        </tr>
+        <tr class="person">
+            <td><label>Isikukood:</label></td>
+            <td><input class="form form-control" required /></td>
+        </tr>
+        <!-- Company specific fields -->
+        <tr class="company">
+            <td><label>Juriidiline nimi:</label></td>
+            <td><input class="form form-control" required /></td>
+        </tr>
+        <tr class="company">
+            <td><label>Registrikood:</label></td>
+            <td><input class="form form-control" placeholder="pp.kk.aaaa hh:mm" required pattern="\d{2}\.\d{2}\.\d{4} \d{2}:\d{2}" /></td>
+        </tr>
+        <tr class="company">
+            <td><label>Osalejate arv:</label></td>
+            <td><input class="form form-control" required /></td>
+        </tr>
+        <tr>
+            <td><label>Maksmisviis:</label></td>
+            <td>
+                <button class="form btn dropdown-toggle" type="button" id="paymentMethod" data-bs-toggle="dropdown" aria-expanded="false" required>
+                    Vali makseviis
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="paymentMethod">
+                    <li><a class="dropdown-item" href="#">Pangaülekanne</a></li>
+                    <li><a class="dropdown-item" href="#">Sularaha</a></li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><label class="form-label">Lisainfo:</label></td>
+            <td><input class="form form-control" /></td>
+        </tr>
+    </tbody>
+    </table>
+    <div class="mt-5">
+    <a asp-page="/Index" type="button" class="light-gray-style m-1 rounded sized-button unlink">Tagasi</a>
+    <input type="submit" class="blue-style m-1 rounded sized-button move-text-down" value="Lisa" />
+    </div>
+</form>
+
 </div>
 </div>
