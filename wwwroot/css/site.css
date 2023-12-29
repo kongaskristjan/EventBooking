@@ -83,8 +83,14 @@ header, footer {
   padding-bottom: 2em;
 }
 
+.form-label {
+  width: 8em;
+}
+
 .form {
-  margin-left: 3em;
+  border-color: #808080;
+  width: 18em;
+  text-align: left;
 }
 
 .form-block {
@@ -101,6 +107,10 @@ header, footer {
 }
 
 /* Miscellaneous */
+
+.radio {
+  margin-left: 3em;
+}
 
 .blue-style {
   background-color: #005aa1;

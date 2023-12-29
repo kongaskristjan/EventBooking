@@ -23,12 +23,12 @@
             <td><input asp-for="formEvent.Location" class="form form-control" required /></td>
         </tr>
         <tr>
-            <td><label asp-for="formEvent.AdditionalInformation">Lisainfo:</label></td>
+            <td><label asp-for="formEvent.AdditionalInformation" class="form-label">Lisainfo:</label></td>
             <td><input asp-for="formEvent.AdditionalInformation" class="form form-control" /></td>
         </tr>
     </tbody>
     </table>
-    <div>
+    <div class="mt-5">
     <a asp-page="/Index" type="button" class="light-gray-style m-1 rounded sized-button unlink">Tagasi</a>
     <input type="submit" class="blue-style m-1 rounded sized-button move-text-down" value="Lisa" />
     </div>
