@@ -157,3 +157,7 @@ header, footer {
   position: relative;
   top: 1.5px;
 }
+
+.dropdown-menu {
+  width: 17.8em;
+}
