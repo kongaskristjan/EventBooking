@@ -11,15 +11,15 @@
     <tbody>
         <tr>
             <td class="py-1 fw-bold"><span class="me-4">Ürituse nimi:</span></td>
-            <td class="py-1"><span class="form">nimi</span></td>
+            <td class="py-1"><span class="form">@Model.CurrentEvent.Name</span></td>
         </tr>
         <tr>
             <td class="py-1 fw-bold"><span class="me-4">Ürituse toimumisaeg:</span></td>
-            <td class="py-1"><span class="form">toimumisaeg</span></td>
+            <td class="py-1"><span class="form">@Model.FormattedTimestamp</span></td>
         </tr>
         <tr>
             <td class="py-1 fw-bold"><span class="me-4">Koht:</span></td>
-            <td class="py-1"><span class="form">koht</span></td>
+            <td class="py-1"><span class="form">@Model.CurrentEvent.Location</span></td>
         </tr>
         <tr>
             <td class="py-1 fw-bold">Ettevõtted:</td>

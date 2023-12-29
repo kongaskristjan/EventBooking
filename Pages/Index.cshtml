@@ -17,7 +17,7 @@
                 <tr>
                     <td class="align-middle">@i. @item.Name</td>
                     <td class="align-middle">@item.Timestamp.ToString("yyyy-MM-dd")</td>
-                    <td class="align-middle"><a asp-page="/ShowParticipants" asp-route-EventId="12" class="link unlink" >Osavõtjad</a></td>
+                    <td class="align-middle"><a asp-page="/ShowParticipants" asp-route-EventId="@item.Id" class="link unlink" >Osavõtjad</a></td>
                     <td class="align-middle">
                         <form method="post" asp-page-handler="DeleteEvent" onsubmit="return confirm('Oled kindel et soovid ürituse kustutada?');">
                             @Html.AntiForgeryToken()

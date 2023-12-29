@@ -34,5 +34,11 @@ namespace EventBooking.Data.Adapters
             events = _context.Events.OrderBy(entity => entity.Timestamp).ToArray();
             return events;
         }
+
+        public Event GetEvent(int id)
+        {
+            var e = _context.Events.Find(id);
+            return e;
+        }
     }
 }
