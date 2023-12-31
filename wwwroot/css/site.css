@@ -161,3 +161,7 @@ header, footer {
 .dropdown-menu {
   width: 17.8em;
 }
+
+.participants-table {
+  width: 200%;
+}

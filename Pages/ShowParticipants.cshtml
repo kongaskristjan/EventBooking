@@ -29,7 +29,7 @@
             <td class="py-1 fw-bold align-top">Ettevõtted:</td>
             <td class="py-1"><span class="form">
                 <br>
-                <table style="width:200%;">
+                <table class="participants-table">
                     <tbody>
                         @if (Model.Companies.Length > 0)
                         {
@@ -54,20 +54,29 @@
             </span></td>
         </tr>
         <tr>
-            <td class="py-1 fw-bold">Eraisikud:</td>
+            <td class="py-1 fw-bold align-top">Eraisikud:</td>
             <td class="py-1"><span class="form">
-                <!--<table>
+                <br>
+                <table class="participants-table">
                     <tbody>
-                        foreach (var participant in Model.Participants)
+                        @if (Model.Persons.Length > 0)
                         {
                             <tr>
-                                <td>participant.Name</td>
-                                <td>participant.Email</td>
-                                <td>participant.Phone</td>
+                                <td class="col-9 fw-bold">Nimi</td>
+                                <td class="col-3 fw-bold">Isikukood</td>
                             </tr>
                         }
+                        @{i = 1;}
+                        @foreach (var person in Model.Persons)
+                        {
+                            <tr>
+                                <td>@i. @person.FirstName @person.LastName</td>
+                                <td>@person.IdentificationNumber</td>
+                            </tr>
+                            i++;
+                        }
                     </tbody>
-                </table>-->
+                </table>
             </span></td>
         </tr>
 
