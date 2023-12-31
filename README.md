@@ -18,7 +18,7 @@ erDiagram
         text first_name "First name"
         text last_name "Last name"
         text person_id_number "Personal identification number"
-        text payment_method "Payment method ('Sularaha'/'Pangaülekanne')"
+        text payment_method "Payment method ('Cash'/'BankTransfer')"
         varchar(1500) info "Additional information"
     }
     COMPANY {
@@ -27,7 +27,7 @@ erDiagram
         text name "Name of the company"
         integer participants "Number of participants"
         text company_reg_number "Registration number of the company"
-        text payment_method "Payment method ('Sularaha'/'Pangaülekanne')"
+        text payment_method "Payment method ('Cash'/'BankTransfer')"
         varchar(5000) info "Additional information"
     }
     EVENT ||--o{ PERSON : ""
