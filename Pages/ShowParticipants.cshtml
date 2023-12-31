@@ -22,20 +22,35 @@
             <td class="py-1"><span class="form">@Model.CurrentEvent.Location</span></td>
         </tr>
         <tr>
-            <td class="py-1 fw-bold">Ettevõtted:</td>
+            <td class="py-1 fw-bold"><span class="me-4">Lisainfo:</span></td>
+            <td class="py-1"><span class="form">@Model.CurrentEvent.Info</span></td>
+        </tr>
+        <tr>
+            <td class="py-1 fw-bold align-top">Ettevõtted:</td>
             <td class="py-1"><span class="form">
-                <!--<table>
+                <br>
+                <table style="width:200%;">
                     <tbody>
-                        foreach (var participant in Model.Participants)
+                        @if (Model.Companies.Length > 0)
                         {
                             <tr>
-                                <td>participant.Name</td>
-                                <td>participant.Email</td>
-                                <td>participant.Phone</td>
+                                <td class="col-6 fw-bold">Nimi</td>
+                                <td class="col-3 fw-bold">Reg. kood</td>
+                                <td class="col-3 fw-bold">Osalejaid</td>
                             </tr>
                         }
+                        @{var i = 1;}
+                        @foreach (var company in Model.Companies)
+                        {
+                            <tr>
+                                <td>@i. @company.Name</td>
+                                <td>@company.CompanyRegistrationNumber</td>
+                                <td>@company.NParticipants</td>
+                            </tr>
+                            i++;
+                        }
                     </tbody>
-                </table>-->
+                </table>
             </span></td>
         </tr>
         <tr>

@@ -43,6 +43,12 @@ namespace EventBooking.Data.Adapters
             return e;
         }
 
+        public void GetAllAttendees(int eventId, out Person[] persons, out Company[] companies)
+        {
+            persons = _context.Persons.Where(entity => entity.EventId == eventId).ToArray();
+            companies = _context.Companies.Where(entity => entity.EventId == eventId).ToArray();
+        }
+
         // Person operations
 
         public void CreatePerson(Person p)
@@ -51,23 +57,12 @@ namespace EventBooking.Data.Adapters
             _context.SaveChanges();
         }
 
-        public void GetAllAttendees(int eventId, out Person[] persons)//, out Company[] companies)
-        {
-            persons = _context.Persons.Where(entity => entity.EventId == eventId).ToArray();
-            //companies = _context.Companies.Where(entity => entity.EventId == eventId).ToArray();
-        }
-
         // Company operations
 
         public void CreateCompany(Company c)
         {
             _context.Companies.Add(c);
             _context.SaveChanges();
-        }
-
-        public void GetAllCompanies(int eventId, out Company[] companies)
-        {
-            companies = _context.Companies.Where(entity => entity.EventId == eventId).ToArray();
         }
     }
 }

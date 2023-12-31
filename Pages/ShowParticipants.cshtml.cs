@@ -34,6 +34,9 @@ public class ShowParticipantsModel : PageModel
     public Event CurrentEvent { get; set; } = new Event();
     public String FormattedTimestamp { get; set; }
 
+    public Person[] Persons { get; set; } = [];
+    public Company[] Companies { get; set; } = [];
+
     private readonly ILogger<CreateEventModel> _logger;
     private readonly DbAdapter _dbAdapter;
 
@@ -46,9 +49,19 @@ public class ShowParticipantsModel : PageModel
     public void OnGet()
     {
         _logger.LogInformation($"ShowParticipantsModel.OnGet() called with EventId={EventId}");
+        
+        // Show event information
         CurrentEvent = _dbAdapter.GetEvent(EventId);
         var estonianTimestamp = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(CurrentEvent.Timestamp, "FLE Standard Time");
         FormattedTimestamp = estonianTimestamp.ToString("yyyy-MM-dd HH:mm");
+
+        // Show attendees
+        Person[] persons;
+        Company[] companies;
+        _dbAdapter.GetAllAttendees(EventId, out persons, out companies);
+        
+        Persons = persons;
+        Companies = companies;
     }
 
     public async Task<IActionResult> OnPostCreateParticipantAsync()

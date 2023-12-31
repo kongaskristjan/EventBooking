@@ -10,8 +10,7 @@
     <div class="p-3">
     <table class="table table-borderless">
         <tbody>
-            @{
-            int i = 1;
+            @{ int i = 1; }
             @foreach (var item in Model.FutureEvents)
             {
                 <tr>
@@ -27,7 +26,6 @@
                     </td>
                 </tr>
                 i++;
-            }
             }
         </tbody>
     </table>
