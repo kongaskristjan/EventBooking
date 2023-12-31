@@ -13,17 +13,16 @@ public class ShowParticipantsModel : PageModel
         [Required]
         public string EntityType { get; set; } = "";
 
-        public string PersonFirstName { get; set; } = "";
-        public string PersonLastName { get; set; } = "";
-        public string PersonIdentificationNumber { get; set; } = "";
+        public string? PersonFirstName { get; set; }
+        public string? PersonLastName { get; set; }
+        public string? PersonIdentificationNumber { get; set; }
         
-        public string CompanyName { get; set; } = "";
-        public string CompanyRegistrationCode { get; set; } = "";
-        public int CompanyParticipants { get; set; } = 1;
+        public string? CompanyName { get; set; }
+        public string? CompanyRegistrationCode { get; set; }
+        public int? CompanyParticipants { get; set; }
 
-        [Required]
         public string PaymentMethod { get; set; } = "";
-        public string? Info { get; set; }
+        public string? Info { get; set; } = "";
     }
 
     [BindProperty]
@@ -55,22 +54,47 @@ public class ShowParticipantsModel : PageModel
     public async Task<IActionResult> OnPostCreateParticipantAsync()
     {
         _logger.LogInformation("CreateEventModel.OnPostCreateParticipantAsync(): EntityType = {0}, PersonFirstName = {1}, PersonLastName = {2}, PersonIdentificationNumber = {3}, CompanyName = {4}, CompanyRegistrationCode = {5}, CompanyParticipants = {6}, PaymentMethod = {7}, Info = {8}", formParticipant.EntityType, formParticipant.PersonFirstName, formParticipant.PersonLastName, formParticipant.PersonIdentificationNumber, formParticipant.CompanyName, formParticipant.CompanyRegistrationCode, formParticipant.CompanyParticipants, formParticipant.PaymentMethod, formParticipant.Info);
+        _logger.LogInformation($"ModelState.IsValid = {ModelState.IsValid}");
         if (!ModelState.IsValid)
         {
             return Page();
         }
 
         // Add the participant to the database
-        /*
-        var dbEvent = new Event
+        _logger.LogInformation($"Creating participant of type {formParticipant.EntityType}");
+        if (formParticipant.EntityType == "person")
         {
-            Name = formEvent.Name,
-            Timestamp = utcDateTime,
-            Location = formEvent.Location,
-            Info = formEvent.AdditionalInformation ?? ""
-        };
-        _DbAdapter.CreateEvent(dbEvent);
-        */
+            if (formParticipant.PersonFirstName == null || formParticipant.PersonLastName == null || formParticipant.PersonIdentificationNumber == null)
+            {
+                return Page();
+            }
+            _logger.LogInformation($"Creating person {formParticipant.PersonFirstName} {formParticipant.PersonLastName} with id {formParticipant.PersonIdentificationNumber}");
+            var dbPerson = new Person
+            {
+                EventId = EventId,
+                FirstName = formParticipant.PersonFirstName,
+                LastName = formParticipant.PersonLastName,
+                IdentificationNumber = formParticipant.PersonIdentificationNumber,
+                PaymentMethod = formParticipant.PaymentMethod,
+                Info = formParticipant.Info
+            };
+            _logger.LogInformation($"DbAdapter.CreatePerson(): Id = {dbPerson.Id}, EventId = {dbPerson.EventId}, FirstName = {dbPerson.FirstName}, LastName = {dbPerson.LastName}, IdentificationNumber = {dbPerson.IdentificationNumber}, PaymentMethod = {dbPerson.PaymentMethod}, Info = {dbPerson.Info}");
+ 
+            _dbAdapter.CreatePerson(dbPerson);
+            _logger.LogInformation($"Created person {dbPerson.FirstName} {dbPerson.LastName} with id {dbPerson.Id}");
+        }
+        else if (formParticipant.EntityType == "company")
+        {
+            if (formParticipant.CompanyName == null || formParticipant.CompanyRegistrationCode == null || formParticipant.CompanyParticipants == null)
+            {
+                return Page();
+            }
+            // TODO: Create a company entry
+        }
+        else
+        {
+            throw new Exception($"Unknown entity type: {formParticipant.EntityType}");
+        }
         
         return RedirectToPage("/Index");
     }

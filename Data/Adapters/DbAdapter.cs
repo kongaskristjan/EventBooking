@@ -12,6 +12,8 @@ namespace EventBooking.Data.Adapters
             _context = context;
         }
 
+        // Event operations
+
         public void CreateEvent(Event e)
         {
             _context.Events.Add(e);
@@ -39,6 +41,20 @@ namespace EventBooking.Data.Adapters
         {
             var e = _context.Events.Find(id);
             return e;
+        }
+
+        // Person operations
+
+        public void CreatePerson(Person p)
+        {
+            _context.Persons.Add(p);
+            _context.SaveChanges();
+        }
+
+        public void GetAllAttendees(int eventId, out Person[] persons)//, out Company[] companies)
+        {
+            persons = _context.Persons.Where(entity => entity.EventId == eventId).ToArray();
+            //companies = _context.Companies.Where(entity => entity.EventId == eventId).ToArray();
         }
     }
 }
