@@ -15,12 +15,12 @@ $(document).ready(function(){
 
 // Hide/show table fields based on radio button selection
 document.addEventListener('DOMContentLoaded', function () {
-    var radioButtons = document.querySelectorAll('input[name="EntityType"]');
+    var radioButtons = document.querySelectorAll('input[name="formParticipant.EntityType"]');
     var company = document.querySelectorAll('.company');
     var person = document.querySelectorAll('.person');
 
     function toggleVisibility() {
-        var selectedValue = document.querySelector('input[name="EntityType"]:checked').value;
+        var selectedValue = document.querySelector('input[name="formParticipant.EntityType"]:checked').value;
         if (selectedValue === 'company') {
             company.forEach(function (content) {
                 content.style.display = 'table-row';

@@ -60,18 +60,19 @@
     </table>
 
     <h2 class="form-heading">Osavõtjate lisamine</h2>
-    <form method="post" asp-page-handler="CreateEvent">
+    <form method="post" asp-page-handler="CreateParticipant">
     <table>
     <tbody>
+        <!-- Entity type selection -->
         <tr>
             <td></td>
             <td>
                 <label>
-                    <input type="radio" name="EntityType" value="company" checked />
+                    <input type="radio" asp-for="formParticipant.EntityType" value="company" checked />
                     Ettevõte
                 </label>
                 <label class="ms-5">
-                    <input type="radio" name="EntityType" value="person" />
+                    <input type="radio" asp-for="formParticipant.EntityType" value="person" />
                     Eraisik
                 </label>
             </td>
@@ -80,39 +81,41 @@
         <!-- Person specific fields -->
         <tr class="person">
             <td><label>Eesnimi:</label></td>
-            <td><input class="form form-control" required /></td>
+            <td><input asp-for="formParticipant.PersonFirstName" class="form form-control person-required" /></td>
         </tr>
         <tr class="person">
             <td><label>Perenimi:</label></td>
-            <td><input class="form form-control" placeholder="pp.kk.aaaa hh:mm" required pattern="\d{2}\.\d{2}\.\d{4} \d{2}:\d{2}" /></td>
+            <td><input asp-for="formParticipant.PersonLastName" class="form form-control person-required" /></td>
         </tr>
         <tr class="person">
             <td><label>Isikukood:</label></td>
-            <td><input class="form form-control" required /></td>
+            <td><input asp-for="formParticipant.PersonIdentificationNumber" class="form form-control person-required" pattern="^[0-9]+$" /></td>
         </tr>
+        
         <!-- Company specific fields -->
         <tr class="company">
             <td><label>Juriidiline nimi:</label></td>
-            <td><input class="form form-control" required /></td>
+            <td><input asp-for="formParticipant.CompanyName" class="form form-control company-required" /></td>
         </tr>
         <tr class="company">
             <td><label>Registrikood:</label></td>
-            <td><input class="form form-control" placeholder="pp.kk.aaaa hh:mm" required pattern="\d{2}\.\d{2}\.\d{4} \d{2}:\d{2}" /></td>
+            <td><input asp-for="formParticipant.CompanyRegistrationCode" class="form form-control company-required" pattern="^[0-9]+$" /></td>
         </tr>
         <tr class="company">
             <td><label>Osalejate arv:</label></td>
-            <td><input class="form form-control" required /></td>
+            <td><input asp-for="formParticipant.CompanyParticipants" class="form form-control company-required" type="number" min="1" step="1" /></td>
         </tr>
+
+        <!-- Common fields -->
         <tr>
             <td><label>Maksmisviis:</label></td>
             <td>
-                <button class="form btn dropdown-toggle" type="button" id="paymentMethod" data-bs-toggle="dropdown" aria-expanded="false" required>
-                    Vali makseviis
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="paymentMethod">
-                    <li><a class="dropdown-item" href="#">Pangaülekanne</a></li>
-                    <li><a class="dropdown-item" href="#">Sularaha</a></li>
-                </ul>
+            <select asp-for="formParticipant.PaymentMethod" class="form form-select" name="paymentMethod" id="paymentMethod" required>
+                <option value="" selected disabled>Select Payment Method</option>
+                <option value="BankTransfer">Pangaülekanne</option>
+                <option value="Cash">Sularaha</option>
+            </select>
+            <!--<span asp-validation-for="formParticipant.PaymentMethod" class="text-danger"></span>-->
             </td>
         </tr>
         <tr>
