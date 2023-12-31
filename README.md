@@ -17,7 +17,7 @@ erDiagram
         integer event_id FK "Event id the person is participating, foreign key"
         text first_name "First name"
         text last_name "Last name"
-        text person_id_number "Personal identification number"
+        text person_identification_number "Personal identification number"
         text payment_method "Payment method ('Cash'/'BankTransfer')"
         varchar(1500) info "Additional information"
     }
@@ -25,8 +25,8 @@ erDiagram
         integer id PK "Company id, primary key"
         integer event_id FK "Event id, foreign key"
         text name "Name of the company"
-        integer participants "Number of participants"
-        text company_reg_number "Registration number of the company"
+        text company_registration_number "Registration number of the company"
+        integer n_participants "Number of participants"
         text payment_method "Payment method ('Cash'/'BankTransfer')"
         varchar(5000) info "Additional information"
     }

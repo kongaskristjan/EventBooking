@@ -89,13 +89,25 @@ public class ShowParticipantsModel : PageModel
             {
                 return Page();
             }
-            // TODO: Create a company entry
+            _logger.LogInformation($"Creating company {formParticipant.CompanyName} with registration code {formParticipant.CompanyRegistrationCode} and {formParticipant.CompanyParticipants} participants");
+            var dbCompany = new Company
+            {
+                EventId = EventId,
+                Name = formParticipant.CompanyName,
+                CompanyRegistrationNumber = formParticipant.CompanyRegistrationCode,
+                NParticipants = (int) formParticipant.CompanyParticipants,
+                PaymentMethod = formParticipant.PaymentMethod,
+                Info = formParticipant.Info
+            };
+
+            _dbAdapter.CreateCompany(dbCompany);
+            _logger.LogInformation($"Created company {dbCompany.Name} with registration code {dbCompany.CompanyRegistrationNumber} and {dbCompany.NParticipants} participants");
         }
         else
         {
             throw new Exception($"Unknown entity type: {formParticipant.EntityType}");
         }
         
-        return RedirectToPage("/Index");
+        return Page();
     }
 }
