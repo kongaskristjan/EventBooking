@@ -42,12 +42,18 @@ Lokaalseks testimiseks peab seadistama postgres andmebaasi. Selletarvis on olema
 $ docker-compose up -d
 ```
 
-Et õiged konfiguratsioonifailid üles leida, peab keskkonnamuutujatele õiged väärtused omistama:
+Et õiged konfiguratsioonifailid üles leida, peab keskkonnamuutujatele õiged väärtused omistama (täpne käsk sõltub operatsioonisüsteemist):
 ```
 ASPNETCORE_ENVIRONMENT=Development
 ```
 
-Esmakordsel käivitamisel tuleb ka andmebaasi migratsioonid ära teha:
+Esmakordsel käivitamisel tuleb ka installida `EF Core` andmebaasi töövahendid:
+
+```bash
+dotnet tool install --global dotnet-ef
+```
+
+Siis saab migratsioonid ära teha:
 
 ```bash
 $ dotnet ef database update
