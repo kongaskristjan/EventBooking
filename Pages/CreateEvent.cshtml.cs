@@ -44,7 +44,6 @@ public class CreateEventModel : PageModel
 
     public async Task<IActionResult> OnPostCreateEventAsync()
     {
-        _logger.LogInformation("CreateEventModel.OnPostCreateEventAsync(): Name = {0}, Date = {1}, Location = {2}, AdditionalInformation = {3}", formEvent.Name, formEvent.Date, formEvent.Location, formEvent.AdditionalInformation);
         if (!ModelState.IsValid)
         {
             return Page();

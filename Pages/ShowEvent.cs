@@ -33,7 +33,7 @@ public class ShowEventModel : PageModel
     public int EventId { get; set; }
 
     public Event CurrentEvent { get; set; } = new Event();
-    public String FormattedTimestamp { get; set; }
+    public String FormattedTimestamp { get; set; } = "";
 
     public Person[] Persons { get; set; } = [];
     public Company[] Companies { get; set; } = [];
@@ -55,8 +55,6 @@ public class ShowEventModel : PageModel
 
     public async Task<IActionResult> OnPostCreateParticipantAsync()
     {
-        _logger.LogInformation("CreateEventModel.OnPostCreateParticipantAsync(): EntityType = {0}, PersonFirstName = {1}, PersonLastName = {2}, PersonIdentificationNumber = {3}, CompanyName = {4}, CompanyRegistrationCode = {5}, CompanyParticipants = {6}, PaymentMethod = {7}, Info = {8}", formParticipant.EntityType, formParticipant.PersonFirstName, formParticipant.PersonLastName, formParticipant.PersonIdentificationNumber, formParticipant.CompanyName, formParticipant.CompanyRegistrationCode, formParticipant.CompanyParticipants, formParticipant.PaymentMethod, formParticipant.Info);
-        _logger.LogInformation($"ModelState.IsValid = {ModelState.IsValid}");
         if (!ModelState.IsValid)
         {
             await LoadDataAsync();
@@ -64,7 +62,6 @@ public class ShowEventModel : PageModel
         }
 
         // Add the participant to the database
-        _logger.LogInformation($"Creating participant of type {formParticipant.EntityType}");
         if (formParticipant.EntityType == "person")
         {
             if (formParticipant.PersonFirstName == null || formParticipant.PersonLastName == null || formParticipant.PersonIdentificationNumber == null)
@@ -72,7 +69,6 @@ public class ShowEventModel : PageModel
                 await LoadDataAsync();
                 return Page();
             }
-            _logger.LogInformation($"Creating person {formParticipant.PersonFirstName} {formParticipant.PersonLastName} with id {formParticipant.PersonIdentificationNumber}");
             var dbPerson = new Person
             {
                 EventId = EventId,
@@ -82,10 +78,8 @@ public class ShowEventModel : PageModel
                 PaymentMethod = formParticipant.PaymentMethod,
                 Info = formParticipant.Info
             };
-            _logger.LogInformation($"DbAdapter.CreatePerson(): Id = {dbPerson.Id}, EventId = {dbPerson.EventId}, FirstName = {dbPerson.FirstName}, LastName = {dbPerson.LastName}, IdentificationNumber = {dbPerson.IdentificationNumber}, PaymentMethod = {dbPerson.PaymentMethod}, Info = {dbPerson.Info}");
  
             _dbAdapter.CreatePerson(dbPerson);
-            _logger.LogInformation($"Created person {dbPerson.FirstName} {dbPerson.LastName} with id {dbPerson.Id}");
         }
         else if (formParticipant.EntityType == "company")
         {
@@ -94,7 +88,6 @@ public class ShowEventModel : PageModel
                 await LoadDataAsync();
                 return Page();
             }
-            _logger.LogInformation($"Creating company {formParticipant.CompanyName} with registration code {formParticipant.CompanyRegistrationCode} and {formParticipant.CompanyParticipants} participants");
             var dbCompany = new Company
             {
                 EventId = EventId,
@@ -106,7 +99,6 @@ public class ShowEventModel : PageModel
             };
 
             _dbAdapter.CreateCompany(dbCompany);
-            _logger.LogInformation($"Created company {dbCompany.Name} with registration code {dbCompany.CompanyRegistrationNumber} and {dbCompany.NParticipants} participants");
         }
         else
         {
@@ -121,8 +113,6 @@ public class ShowEventModel : PageModel
 
     private async Task LoadDataAsync()
     {
-        _logger.LogInformation($"ShowEventModel.LoadDataAsync() called with EventId={EventId}");
-        
         // Show event information
         CurrentEvent = _dbAdapter.GetEvent(EventId);
         var estonianTimestamp = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(CurrentEvent.Timestamp, "FLE Standard Time");
