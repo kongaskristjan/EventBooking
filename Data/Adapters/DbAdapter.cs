@@ -22,11 +22,14 @@ namespace EventBooking.Data.Adapters
 
         public void RemoveEvent(int id)
         {
-            // TODO: Remove all bookings for this event also
+            // Remove all attendees
+            var persons = _context.Persons.Where(entity => entity.EventId == id).ToArray();
+            _context.Persons.RemoveRange(persons);
 
-            // TODO: Optimize calls to the database
+            // Remove the event
             var e = _context.Events.Find(id);
             _context.Events.Remove(e);
+
             _context.SaveChanges();
         }
 
