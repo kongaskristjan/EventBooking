@@ -6,35 +6,35 @@
 erDiagram
 
     EVENT {
-        integer id PK "Event id, primary key"
-        text name "Event name"
-        timestamp timestamp "Event timestamp"
-        text location "Event location string"
-        varchar(1000) info "Additional information"
+        integer id PK "Ürituse ID, primaarvõti"
+        text name "Ürituse nimi"
+        timestamp timestamp "Ürituse ajatempel"
+        text location "Ürituse asukoha kirjeldus"
+        varchar(1000) info "Täiendav informatsioon"
     }
     PERSON {
-        integer id PK "Person id, primary key"
-        integer event_id FK "Event id the person is participating, foreign key"
-        text first_name "First name"
-        text last_name "Last name"
-        text person_identification_number "Personal identification number"
-        text payment_method "Payment method ('Cash'/'BankTransfer')"
-        varchar(1500) info "Additional information"
+        integer id PK "Isiku ID, primaarvõti"
+        integer event_id FK "Ürituse ID, võõrvõti"
+        text first_name "Eesnimi"
+        text last_name "Perenimi"
+        text person_identification_number "Isikukood"
+        text payment_method "Makseviis ('Cash'/'BankTransfer')"
+        varchar(1500) info "Täiendav informatsioon"
     }
     COMPANY {
-        integer id PK "Company id, primary key"
-        integer event_id FK "Event id, foreign key"
-        text name "Name of the company"
-        text company_registration_number "Registration number of the company"
-        integer n_participants "Number of participants"
-        text payment_method "Payment method ('Cash'/'BankTransfer')"
-        varchar(5000) info "Additional information"
+        integer id PK "Ettevõtte ID, primaarvõti"
+        integer event_id FK "Ürituse ID, võõrvõti"
+        text name "Ettevõtte nimi"
+        text company_registration_number "Ettevõtte registreerimisnumber"
+        integer n_participants "Osalejate arv"
+        text payment_method "Makseviis ('Cash'/'BankTransfer')"
+        varchar(5000) info "Täiendav informatsioon"
     }
     EVENT ||--o{ PERSON : ""
     EVENT ||--o{ COMPANY : ""
 ```
 
-## Setup
+## Seadistus
 
 Lokaalseks testimiseks peab seadistama postgres andmebaasi. Selletarvis on olemas `docker-compose` setup, mille saab `EventBooking/` kaustast käivitada selliselt:
 
@@ -58,3 +58,37 @@ Seejärel saab käivitada serveri:
 ```bash
 $ dotnet watch
 ```
+
+## Projekti ülesehitus
+
+Projekti jaoks olulisemad kaustad/failid:
+
+* Data/Adapters/DBAdapter.cs - Kõik andmebaasi puudutavad operatsioonid on siia faili koondatud
+
+* Models/ - Iga andmebaasi tabeli jaoks mudel koos constraintidega.
+    * Models/EventModel.cs - Ürituse tabeli definitsioon
+    * Models/PersonModel.cs - Eraisiku tabeli definitsioon
+    * Models/CompanyModel.cs - Ettevõtte tabeli definitsioon
+
+* Pages/ - Lehekülgede definitsioonid
+    * Pages/Shared/_Layout.cshtml - Lehekülje üldstruktuur, header/footer
+    * Pages/Index.* - Avaleht koos toimunud ja tulevaste üritustega
+    * Pages/CreateEvent.* - Ürituse lisamine
+    * Pages/ShowEvent.* - Osalejate vaatamine/lisamine (tegelikult peaksid vaatamine ja lisamine olema juhendi järgi eraldi leheküljed)
+
+* wwwroot/
+    * wwwroot/css - Veebilehe CSS
+    * wwwroot/js - Veebilehe abistav Javascript
+
+## Skoop
+
+Tegin ära enamiku ülesandest, aga jätsin praegu välja konkreetse osaleja andmete vaatamise/muutmise/kustutamise. Iseenesest neis mingit sellist keerukust/tehnoloogiaid ei tohiks olla, mida juba olemasolevas koodis näha poleks.
+
+Püüdsin veebilehe välimuse juures matkida kaasapandud kuvatõmmiseid.
+
+### Tehnoloogiad:
+
+* .NET 8.0.0
+* Razor
+* EF Core
+* Postgres
