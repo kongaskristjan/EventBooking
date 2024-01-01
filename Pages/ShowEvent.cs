@@ -79,7 +79,7 @@ public class ShowEventModel : PageModel
                 Info = formParticipant.Info
             };
  
-            _dbAdapter.CreatePerson(dbPerson);
+            await _dbAdapter.CreatePersonAsync(dbPerson);
         }
         else if (formParticipant.EntityType == "company")
         {
@@ -98,7 +98,7 @@ public class ShowEventModel : PageModel
                 Info = formParticipant.Info
             };
 
-            _dbAdapter.CreateCompany(dbCompany);
+            await _dbAdapter.CreateCompanyAsync(dbCompany);
         }
         else
         {
@@ -114,14 +114,15 @@ public class ShowEventModel : PageModel
     private async Task LoadDataAsync()
     {
         // Show event information
-        CurrentEvent = _dbAdapter.GetEvent(EventId);
+        CurrentEvent = await _dbAdapter.GetEventAsync(EventId);
         var estonianTimestamp = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(CurrentEvent.Timestamp, "FLE Standard Time");
         FormattedTimestamp = estonianTimestamp.ToString("yyyy-MM-dd HH:mm");
 
         // Show attendees
         Person[] persons;
         Company[] companies;
-        _dbAdapter.GetAllAttendees(EventId, out persons, out companies);
+        // Get all attendees
+        (persons, companies) = await _dbAdapter.GetAllAttendeesAsync(EventId);
 
         Persons = persons;
         Companies = companies;

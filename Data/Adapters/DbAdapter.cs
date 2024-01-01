@@ -1,4 +1,4 @@
-
+using Microsoft.EntityFrameworkCore;
 using EventBooking.Models;
 
 namespace EventBooking.Data.Adapters
@@ -14,58 +14,58 @@ namespace EventBooking.Data.Adapters
 
         // Event operations
 
-        public void CreateEvent(Event e)
+        public async Task CreateEventAsync(Event e)
         {
-            _context.Events.Add(e);
-            _context.SaveChanges();
+            await _context.Events.AddAsync(e);
+            await _context.SaveChangesAsync();
         }
 
-        public void RemoveEvent(int id)
+        public async Task RemoveEventAsync(int id)
         {
             // Remove all attendees
-            var persons = _context.Persons.Where(entity => entity.EventId == id).ToArray();
+            var persons = await _context.Persons.Where(entity => entity.EventId == id).ToListAsync();
             _context.Persons.RemoveRange(persons);
 
             // Remove the event
-            var e = _context.Events.Find(id);
+            var e = await _context.Events.FindAsync(id);
             _context.Events.Remove(e);
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public Event[] ListEvents()
+        public async Task<Event[]> ListEventsAsync()
         {
-            Event [] events;
-            events = _context.Events.OrderBy(entity => entity.Timestamp).ToArray();
+            var events = await _context.Events.OrderBy(entity => entity.Timestamp).ToArrayAsync();
             return events;
         }
 
-        public Event GetEvent(int id)
+        public async Task<Event> GetEventAsync(int id)
         {
-            var e = _context.Events.Find(id);
+            var e = await _context.Events.FindAsync(id);
             return e;
         }
 
-        public void GetAllAttendees(int eventId, out Person[] persons, out Company[] companies)
+        public async Task<(Person[], Company[])> GetAllAttendeesAsync(int eventId)
         {
-            persons = _context.Persons.Where(entity => entity.EventId == eventId).ToArray();
-            companies = _context.Companies.Where(entity => entity.EventId == eventId).ToArray();
+            var persons = await _context.Persons.Where(entity => entity.EventId == eventId).ToArrayAsync();
+            var companies = await _context.Companies.Where(entity => entity.EventId == eventId).ToArrayAsync();
+            return (persons, companies);
         }
 
         // Person operations
 
-        public void CreatePerson(Person p)
+        public async Task CreatePersonAsync(Person p)
         {
-            _context.Persons.Add(p);
-            _context.SaveChanges();
+            await _context.Persons.AddAsync(p);
+            await _context.SaveChangesAsync();
         }
 
         // Company operations
 
-        public void CreateCompany(Company c)
+        public async Task CreateCompanyAsync(Company c)
         {
-            _context.Companies.Add(c);
-            _context.SaveChanges();
+            await _context.Companies.AddAsync(c);
+            await _context.SaveChangesAsync();
         }
     }
 }

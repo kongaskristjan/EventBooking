@@ -20,18 +20,19 @@ public class IndexModel : PageModel
         _DbAdapter = DbAdapter;
     }
 
-    public void OnGet()
+    public async Task<IActionResult> OnGetAsync()
     {
         // Populate PastEvents and FutureEvents
-        var events = _DbAdapter.ListEvents();
+        var events = await _DbAdapter.ListEventsAsync();
         var now = DateTime.UtcNow;
         PastEvents = events.Where(e => e.Timestamp < now);
         FutureEvents = events.Where(e => e.Timestamp >= now);
+        return Page();
     }
 
     public async Task<IActionResult> OnPostDeleteEventAsync(int id)
     {
-        _DbAdapter.RemoveEvent(id);
+        await _DbAdapter.RemoveEventAsync(id);
         return RedirectToPage("/Index");
     }
 }

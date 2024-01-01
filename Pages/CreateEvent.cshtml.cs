@@ -71,7 +71,7 @@ public class CreateEventModel : PageModel
             Location = formEvent.Location,
             Info = formEvent.AdditionalInformation ?? ""
         };
-        _DbAdapter.CreateEvent(dbEvent);
+        await _DbAdapter.CreateEventAsync(dbEvent);
         
         return RedirectToPage("/Index");
     }
