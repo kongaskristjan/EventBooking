@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using EventBooking.Data.Adapters;
 using EventBooking.Models;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace EventBooking.Pages;
 
@@ -46,22 +47,10 @@ public class ShowParticipantsModel : PageModel
         _dbAdapter = dbAdapter;
     }
 
-    public void OnGet()
+    public async Task<IActionResult> OnGetAsync()
     {
-        _logger.LogInformation($"ShowParticipantsModel.OnGet() called with EventId={EventId}");
-        
-        // Show event information
-        CurrentEvent = _dbAdapter.GetEvent(EventId);
-        var estonianTimestamp = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(CurrentEvent.Timestamp, "FLE Standard Time");
-        FormattedTimestamp = estonianTimestamp.ToString("yyyy-MM-dd HH:mm");
-
-        // Show attendees
-        Person[] persons;
-        Company[] companies;
-        _dbAdapter.GetAllAttendees(EventId, out persons, out companies);
-        
-        Persons = persons;
-        Companies = companies;
+        await LoadDataAsync();
+        return Page();
     }
 
     public async Task<IActionResult> OnPostCreateParticipantAsync()
@@ -70,6 +59,7 @@ public class ShowParticipantsModel : PageModel
         _logger.LogInformation($"ModelState.IsValid = {ModelState.IsValid}");
         if (!ModelState.IsValid)
         {
+            await LoadDataAsync();
             return Page();
         }
 
@@ -79,6 +69,7 @@ public class ShowParticipantsModel : PageModel
         {
             if (formParticipant.PersonFirstName == null || formParticipant.PersonLastName == null || formParticipant.PersonIdentificationNumber == null)
             {
+                await LoadDataAsync();
                 return Page();
             }
             _logger.LogInformation($"Creating person {formParticipant.PersonFirstName} {formParticipant.PersonLastName} with id {formParticipant.PersonIdentificationNumber}");
@@ -100,6 +91,7 @@ public class ShowParticipantsModel : PageModel
         {
             if (formParticipant.CompanyName == null || formParticipant.CompanyRegistrationCode == null || formParticipant.CompanyParticipants == null)
             {
+                await LoadDataAsync();
                 return Page();
             }
             _logger.LogInformation($"Creating company {formParticipant.CompanyName} with registration code {formParticipant.CompanyRegistrationCode} and {formParticipant.CompanyParticipants} participants");
@@ -120,7 +112,41 @@ public class ShowParticipantsModel : PageModel
         {
             throw new Exception($"Unknown entity type: {formParticipant.EntityType}");
         }
+
+        // Reload the page
+        ResetFormParticipant();
+        await LoadDataAsync();
+        return RedirectToPage();
+    }
+
+    private async Task LoadDataAsync()
+    {
+        _logger.LogInformation($"ShowParticipantsModel.LoadDataAsync() called with EventId={EventId}");
         
-        return Page();
+        // Show event information
+        CurrentEvent = _dbAdapter.GetEvent(EventId);
+        var estonianTimestamp = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(CurrentEvent.Timestamp, "FLE Standard Time");
+        FormattedTimestamp = estonianTimestamp.ToString("yyyy-MM-dd HH:mm");
+
+        // Show attendees
+        Person[] persons;
+        Company[] companies;
+        _dbAdapter.GetAllAttendees(EventId, out persons, out companies);
+
+        Persons = persons;
+        Companies = companies;
+    }
+
+    private void ResetFormParticipant()
+    {
+        formParticipant.EntityType = "";
+        formParticipant.PersonFirstName = null;
+        formParticipant.PersonLastName = null;
+        formParticipant.PersonIdentificationNumber = null;
+        formParticipant.CompanyName = null;
+        formParticipant.CompanyRegistrationCode = null;
+        formParticipant.CompanyParticipants = null;
+        formParticipant.PaymentMethod = "";
+        formParticipant.Info = "";
     }
 }
