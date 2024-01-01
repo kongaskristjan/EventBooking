@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace EventBooking.Pages;
 
-public class ShowParticipantsModel : PageModel
+public class ShowEventModel : PageModel
 {
     public class FormParticipant
     {
@@ -41,7 +41,7 @@ public class ShowParticipantsModel : PageModel
     private readonly ILogger<CreateEventModel> _logger;
     private readonly DbAdapter _dbAdapter;
 
-    public ShowParticipantsModel(ILogger<CreateEventModel> logger, DbAdapter dbAdapter)
+    public ShowEventModel(ILogger<CreateEventModel> logger, DbAdapter dbAdapter)
     {
         _logger = logger;
         _dbAdapter = dbAdapter;
@@ -121,7 +121,7 @@ public class ShowParticipantsModel : PageModel
 
     private async Task LoadDataAsync()
     {
-        _logger.LogInformation($"ShowParticipantsModel.LoadDataAsync() called with EventId={EventId}");
+        _logger.LogInformation($"ShowEventModel.LoadDataAsync() called with EventId={EventId}");
         
         // Show event information
         CurrentEvent = _dbAdapter.GetEvent(EventId);
