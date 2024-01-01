@@ -28,7 +28,11 @@ namespace EventBooking.Data.Adapters
 
             // Remove the event
             var e = await _context.Events.FindAsync(id);
-            _context.Events.Remove(e);
+            if(e != null) {
+                _context.Events.Remove(e);
+            } else {
+                throw new KeyNotFoundException($"Event with id {id} not found");
+            }
 
             await _context.SaveChangesAsync();
         }
@@ -42,6 +46,9 @@ namespace EventBooking.Data.Adapters
         public async Task<Event> GetEventAsync(int id)
         {
             var e = await _context.Events.FindAsync(id);
+            if(e == null) {
+                throw new KeyNotFoundException($"Event with id {id} not found");
+            }
             return e;
         }
 

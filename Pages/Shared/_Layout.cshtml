@@ -1,7 +1,7 @@
 ﻿@functions {
     private string IsActive(string pageName)
     {
-        var currentPage = (string) ViewContext.RouteData.Values["Page"];
+        var currentPage = ViewContext.RouteData.Values["Page"] as string;
         return currentPage?.EndsWith(pageName) == true ? "blue-style" : "";
     }
 }
