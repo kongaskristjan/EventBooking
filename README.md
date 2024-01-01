@@ -36,10 +36,15 @@ erDiagram
 
 ## Setup
 
-Lokaalseks testimiseks peab kõigepealt seadistama postgres andmebaasi. Selletarvis on olemas `docker-compose` setup, mille saab `EventBooking/` kaustast käivitada selliselt:
+Lokaalseks testimiseks peab seadistama postgres andmebaasi. Selletarvis on olemas `docker-compose` setup, mille saab `EventBooking/` kaustast käivitada selliselt:
 
 ```bash
 $ docker-compose up -d
+```
+
+Et õiged konfiguratsioonifailid üles leida, peab keskkonnamuutujatele õiged väärtused omistama:
+```
+ASPNETCORE_ENVIRONMENT=Development
 ```
 
 Esmakordsel käivitamisel tuleb ka andmebaasi migratsioonid ära teha:
@@ -51,5 +56,5 @@ $ dotnet ef database update
 Seejärel saab käivitada serveri:
 
 ```bash
-dotnet watch
+$ dotnet watch
 ```
